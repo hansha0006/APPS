@@ -1,0 +1,46 @@
+class Car {
+    String modelName;
+    double price;
+
+    // Default constructor
+    Car() {
+        modelName = "Not Available";
+        price = 0;
+    }
+
+    // Constructor with model name
+    Car(String model) {
+        modelName = model;
+        price = 0;
+    }
+
+    // Constructor with model name and price
+    Car(String model, double p) {
+        modelName = model;
+        price = p;
+    }
+
+    void display() {
+        System.out.println("Model Name : " + modelName);
+        System.out.println("Price : " + price);
+        System.out.println();
+    }
+}
+
+public class CarShowroom {
+    public static void main(String[] args) {
+
+        Car car1 = new Car();
+        Car car2 = new Car("BMW");
+        Car car3 = new Car("Audi", 5500000);
+
+        System.out.println("Car 1:");
+        car1.display();
+
+        System.out.println("Car 2:");
+        car2.display();
+
+        System.out.println("Car 3:");
+        car3.display();
+    }
+}
