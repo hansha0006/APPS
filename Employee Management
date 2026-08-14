@@ -1,0 +1,41 @@
+import java.util.*;
+
+class Employee {
+    int id;
+    String name;
+    double salary;
+
+    Employee(int id, String name, double salary) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+    }
+
+    void display() {
+        double annual = salary * 12;
+        double bonus = salary >= 30000 ? annual * 0.10 : 0;
+
+        System.out.println("\nID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Monthly Salary: " + salary);
+        System.out.println("Annual Salary: " + annual);
+        System.out.println("Bonus: " + bonus);
+        System.out.println("Eligibility: " +
+                (salary >= 30000 ? "Eligible" : "Not Eligible"));
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Employee[] e = new Employee[5];
+
+        for (int i = 0; i < 5; i++) {
+            System.out.println("Enter ID, Name, Monthly Salary:");
+            e[i] = new Employee(sc.nextInt(), sc.next(), sc.nextDouble());
+        }
+
+        for (Employee x : e)
+            x.display();
+    }
+}
