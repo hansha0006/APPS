@@ -1,0 +1,40 @@
+import java.util.*;
+
+class Patient {
+    String name;
+    double fee;
+
+    Patient(String name, double fee) {
+        this.name = name;
+        this.fee = fee;
+    }
+
+    double finalAmount(double fee) {
+        double discount = fee >= 2000 ? fee * 0.10 : fee * 0.05;
+        return fee - discount;
+    }
+
+    void display() {
+        double discount = fee >= 2000 ? fee * 0.10 : fee * 0.05;
+
+        System.out.println("\nName: " + name);
+        System.out.println("Fee: " + fee);
+        System.out.println("Discount: " + discount);
+        System.out.println("Final Amount: " + finalAmount(fee));
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Patient[] p = new Patient[5];
+
+        for (int i = 0; i < 5; i++) {
+            System.out.println("Enter Patient Name and Fee:");
+            p[i] = new Patient(sc.next(), sc.nextDouble());
+        }
+
+        for (Patient x : p)
+            x.display();
+    }
+}
