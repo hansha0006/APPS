@@ -1,0 +1,58 @@
+import accounts.Account;
+import accounts.SavingsAccount;
+import accounts.CurrentAccount;
+
+import payments.Payment;
+import payments.UPIPayment;
+import payments.CardPayment;
+
+import security.OnlineTransaction;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        // Runtime Polymorphism
+        Account account;
+
+        account = new SavingsAccount(
+            101, "Rahul", 50000, 5.5
+        );
+
+        account.displayDetails();
+
+        System.out.println();
+
+        account = new CurrentAccount(
+            102, "Priya", 75000, 20000
+        );
+
+        account.displayDetails();
+
+        System.out.println("\n--- Payments ---");
+
+        // Payment reference
+        Payment payment;
+
+        payment = new UPIPayment();
+        payment.pay(2500);
+
+        ((UPIPayment) payment).verifyPayment();
+
+        payment = new CardPayment();
+        payment.pay(5000);
+
+        System.out.println("\n--- Online Transaction Check ---");
+
+        UPIPayment upi = new UPIPayment();
+        CardPayment card = new CardPayment();
+
+        if (upi instanceof OnlineTransaction) {
+            System.out.println("UPI is an online transaction.");
+        }
+
+        if (card instanceof OnlineTransaction) {
+            System.out.println("Card is an online transaction.");
+        }
+    }
+}
