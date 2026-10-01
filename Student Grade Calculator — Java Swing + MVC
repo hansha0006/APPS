@@ -1,0 +1,102 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+// MODEL
+class StudentModel {
+    String name;
+    int m1, m2, m3;
+
+    int getTotal() {
+        return m1 + m2 + m3;
+    }
+
+    double getAverage() {
+        return getTotal() / 3.0;
+    }
+
+    String getGrade() {
+        double avg = getAverage();
+
+        if (avg >= 90) return "A";
+        else if (avg >= 75) return "B";
+        else if (avg >= 60) return "C";
+        else if (avg >= 50) return "D";
+        else return "F";
+    }
+}
+
+// VIEW
+class StudentView extends JFrame {
+    JTextField name = new JTextField();
+    JTextField mark1 = new JTextField();
+    JTextField mark2 = new JTextField();
+    JTextField mark3 = new JTextField();
+
+    JButton calculate = new JButton("Calculate Result");
+
+    JLabel result = new JLabel("Result will appear here");
+
+    StudentView() {
+        setTitle("Student Grade Calculator");
+        setSize(400, 350);
+        setLayout(new GridLayout(6, 2));
+
+        add(new JLabel("Student Name"));
+        add(name);
+
+        add(new JLabel("Subject 1"));
+        add(mark1);
+
+        add(new JLabel("Subject 2"));
+        add(mark2);
+
+        add(new JLabel("Subject 3"));
+        add(mark3);
+
+        add(calculate);
+        add(result);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+}
+
+// CONTROLLER
+class StudentController {
+    StudentModel model;
+    StudentView view;
+
+    StudentController(StudentModel model, StudentView view) {
+        this.model = model;
+        this.view = view;
+
+        view.calculate.addActionListener(e -> calculate());
+    }
+
+    void calculate() {
+        try {
+            model.name = view.name.getText();
+            model.m1 = Integer.parseInt(view.mark1.getText());
+            model.m2 = Integer.parseInt(view.mark2.getText());
+            model.m3 = Integer.parseInt(view.mark3.getText());
+
+            view.result.setText(
+                "Total: " + model.getTotal() +
+                " Average: " + String.format("%.2f", model.getAverage()) +
+                " Grade: " + model.getGrade()
+            );
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(view, "Enter valid marks");
+        }
+    }
+}
+
+// MAIN
+public class StudentGradeApp {
+    public static void main(String[] args) {
+        StudentModel model = new StudentModel();
+        StudentView view = new StudentView();
+        new StudentController(model, view);
+    }
+}
