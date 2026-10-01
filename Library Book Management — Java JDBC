@@ -1,0 +1,118 @@
+import java.sql.*;
+import java.util.Scanner;
+
+public class LibraryJDBC {
+
+    static final String URL =
+        "jdbc:mysql://localhost:3306/library";
+
+    static final String USER = "root";
+    static final String PASS = "root";
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        try {
+
+            Connection con =
+                DriverManager.getConnection(URL, USER, PASS);
+
+            // 1. INSERT BOOK
+            System.out.print("Enter Book ID: ");
+            int id = sc.nextInt();
+            sc.nextLine();
+
+            System.out.print("Enter Title: ");
+            String title = sc.nextLine();
+
+            System.out.print("Enter Author: ");
+            String author = sc.nextLine();
+
+            System.out.print("Enter Price: ");
+            double price = sc.nextDouble();
+
+            String insert =
+                "INSERT INTO Book VALUES (?, ?, ?, ?, ?)";
+
+            PreparedStatement ps =
+                con.prepareStatement(insert);
+
+            ps.setInt(1, id);
+            ps.setString(2, title);
+            ps.setString(3, author);
+            ps.setDouble(4, price);
+            ps.setBoolean(5, true);
+
+            ps.executeUpdate();
+
+            System.out.println("Book inserted successfully.");
+
+            // 2. SEARCH BOOK
+            System.out.print("Enter Book ID to search: ");
+            int searchId = sc.nextInt();
+
+            String search =
+                "SELECT * FROM Book WHERE BookID=?";
+
+            ps = con.prepareStatement(search);
+            ps.setInt(1, searchId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                System.out.println(
+                    rs.getInt("BookID") + " " +
+                    rs.getString("Title") + " " +
+                    rs.getString("Author") + " " +
+                    rs.getDouble("Price") + " " +
+                    rs.getBoolean("Availability")
+                );
+
+            } else {
+                System.out.println("Book not found.");
+            }
+
+            // 3. DISPLAY AVAILABLE BOOKS
+            String available =
+                "SELECT * FROM Book WHERE Availability=true";
+
+            ps = con.prepareStatement(available);
+
+            rs = ps.executeQuery();
+
+            System.out.println("\nAvailable Books:");
+
+            while (rs.next()) {
+
+                System.out.println(
+                    rs.getInt("BookID") + " - " +
+                    rs.getString("Title")
+                );
+            }
+
+            // 4. CHANGE AVAILABILITY
+            System.out.print(
+                "\nEnter Book ID to issue: ");
+
+            int issueId = sc.nextInt();
+
+            String update =
+                "UPDATE Book SET Availability=false " +
+                "WHERE BookID=?";
+
+            ps = con.prepareStatement(update);
+            ps.setInt(1, issueId);
+
+            ps.executeUpdate();
+
+            System.out.println("Book issued successfully.");
+
+            con.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
