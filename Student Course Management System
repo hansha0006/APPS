@@ -1,0 +1,80 @@
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+public class CourseManagement {
+    public static void main(String[] args) {
+
+        JFrame frame = new JFrame("Student Course Management");
+
+        JLabel nameLabel = new JLabel("Student Name:");
+        nameLabel.setBounds(20, 20, 100, 30);
+
+        JTextField nameField = new JTextField();
+        nameField.setBounds(120, 20, 180, 30);
+
+        String[] courses = {
+            "Java",
+            "Data Structures",
+            "Operating Systems",
+            "Database"
+        };
+
+        JList<String> courseList = new JList<>(courses);
+
+        JScrollPane listScroll = new JScrollPane(courseList);
+        listScroll.setBounds(20, 70, 180, 100);
+
+        JButton add = new JButton("Add");
+        add.setBounds(220, 80, 100, 30);
+
+        JButton remove = new JButton("Remove");
+        remove.setBounds(220, 125, 100, 30);
+
+        String[] columns = {
+            "Student Name",
+            "Course",
+            "Status"
+        };
+
+        DefaultTableModel model =
+            new DefaultTableModel(columns, 0);
+
+        JTable table = new JTable(model);
+
+        JScrollPane tableScroll = new JScrollPane(table);
+        tableScroll.setBounds(20, 190, 400, 120);
+
+        add.addActionListener(e -> {
+
+            String student = nameField.getText();
+            String course = courseList.getSelectedValue();
+
+            if (!student.isEmpty() && course != null) {
+                model.addRow(
+                    new Object[]{student, course, "Enrolled"}
+                );
+            }
+        });
+
+        remove.addActionListener(e -> {
+
+            int row = table.getSelectedRow();
+
+            if (row != -1) {
+                model.removeRow(row);
+            }
+        });
+
+        frame.add(nameLabel);
+        frame.add(nameField);
+        frame.add(listScroll);
+        frame.add(add);
+        frame.add(remove);
+        frame.add(tableScroll);
+
+        frame.setSize(470, 370);
+        frame.setLayout(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}
