@@ -1,0 +1,60 @@
+import javax.swing.*;
+
+public class UserLogin {
+    public static void main(String[] args) {
+
+        JFrame frame = new JFrame("User Login");
+
+        JLabel userLabel = new JLabel("Username:");
+        userLabel.setBounds(30, 30, 100, 30);
+
+        JTextField username = new JTextField();
+        username.setBounds(120, 30, 180, 30);
+
+        JLabel passLabel = new JLabel("Password:");
+        passLabel.setBounds(30, 70, 100, 30);
+
+        JPasswordField password = new JPasswordField();
+        password.setBounds(120, 70, 180, 30);
+
+        JCheckBox remember = new JCheckBox("Remember Me");
+        remember.setBounds(120, 110, 150, 30);
+
+        JCheckBox notification = new JCheckBox("Receive Notifications");
+        notification.setBounds(120, 140, 180, 30);
+
+        JButton login = new JButton("Login");
+        login.setBounds(120, 190, 100, 30);
+
+        login.addActionListener(e -> {
+
+            String user = username.getText();
+            String pass = new String(password.getPassword());
+
+            if (user.equals("admin") && pass.equals("1234")) {
+                JOptionPane.showMessageDialog(
+                    frame,
+                    "Login Successful!\nWelcome " + user
+                );
+            } else {
+                JOptionPane.showMessageDialog(
+                    frame,
+                    "Invalid Username or Password"
+                );
+            }
+        });
+
+        frame.add(userLabel);
+        frame.add(username);
+        frame.add(passLabel);
+        frame.add(password);
+        frame.add(remember);
+        frame.add(notification);
+        frame.add(login);
+
+        frame.setSize(380, 280);
+        frame.setLayout(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}
