@@ -1,0 +1,18 @@
+from functools import reduce
+
+salary = [25000, 35000, 45000, 30000, 50000]
+
+# a) Give 10% increment below ₹40,000
+revised = list(map(
+    lambda s: s * 1.10 if s < 40000 else s,
+    salary
+))
+print("Revised Salaries:", revised)
+
+# b) Eligible employees
+eligible = list(filter(lambda s: s < 40000, salary))
+print("Eligible Salaries:", eligible)
+
+# c) Total salary expenditure
+total = reduce(lambda x, y: x + y, revised)
+print("Total Expenditure:", total)
