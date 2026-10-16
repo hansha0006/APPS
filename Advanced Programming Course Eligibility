@@ -1,0 +1,30 @@
+Logical facts
+python(arun, pass).
+data_structures(arun, pass).
+
+python(bala, pass).
+data_structures(bala, fail).
+
+python(charan, pass).
+data_structures(charan, pass).
+
+python(divya, fail).
+data_structures(divya, pass).
+
+
+b) Eligibility rule
+eligible(X) :-
+    python(X, pass),
+    data_structures(X, pass).
+
+
+c) Query
+?- eligible(X).
+
+
+Output:
+X = arun ;
+X = charan.
+
+
+Explanation: A student is eligible only if they pass both Python Programming and Data Structures.
