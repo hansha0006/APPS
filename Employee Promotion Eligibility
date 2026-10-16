@@ -1,0 +1,25 @@
+a) Logical facts
+employee(ravi, 6, completed, 5).
+employee(priya, 3, completed, 4).
+employee(kumar, 8, not_completed, 5).
+employee(meena, 7, completed, 4).
+
+
+The format is employee(Name, Experience, Training, Rating).
+b) Promotion rule
+promotion(X) :-
+    employee(X, Years, completed, Rating),
+    Years >= 5,
+    Rating >= 4.
+
+
+c) Query
+?- promotion(X).
+
+
+Output:
+X = ravi ;
+X = meena.
+
+
+Explanation: Ravi and Meena satisfy all three conditions: at least five years of experience, completed training, and a rating of at least 4.
